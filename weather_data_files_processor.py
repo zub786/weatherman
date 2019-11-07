@@ -6,6 +6,7 @@ from datetime import datetime
 import calendar
 import statistics
 
+
 def parse_files(date, data_files_list, root_path, info_type):
     weather_years = Parse(date, data_files_list, root_path, info_type)
     return weather_years.data
@@ -29,5 +30,6 @@ def generate_report(parsed_list, info_type):
         system('clear')
         print("\t\t\t\t*** RESULTS OF THE MONTH ***")
         print("\t\t\t\tHighest Average: {}C".format(int(statistics.mean([mt.max_temprature for mt in parsed_list]))))
-        print("\t\t\t\tLowest Average: {}C".format(int(statistics.mean(lt.lowest_temprature for lt in parsed_list))))
+        print("\t\t\t\tLowest Average: {}C"
+        .format(int(statistics.mean(lt.lowest_temprature for lt in parsed_list))))
         print("\t\t\t\tAverage Humidity: {}%".format(int(statistics.mean(mh.most_humid for mh in parsed_list))))
