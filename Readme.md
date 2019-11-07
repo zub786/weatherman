@@ -6,5 +6,5 @@
 
 3 - Run the following commands:
 
-	python3.5 weatherman.py 2000 weathedata
-	python3.5 weatherman.py 2000/03 weathedata
+	python3.5 -e weatherman.py 2000 weathedata
+	python3.5 -a weatherman.py 2000/03 weathedata
