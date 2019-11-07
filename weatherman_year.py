@@ -1,41 +1,41 @@
 import sys
 import os
+from os import system
 from datetime import datetime
+import calendar
+import weather_data_files_parser
+import statistics
+
 
 if __name__ == "__main__":
-    date = sys.argv[1]
-    # filesPath = sys.argv[2] + "/" + "lahore_weather_1996_Dec.txt"
-    dataFilesList = [x for x in os.listdir(sys.argv[2])]
-    filesOfTheYear = [fileName for fileName in dataFilesList if date in fileName]
-    MaxTemprature = []
-    LowestTemprature = []
-    MostHumid = []
-    Dates = []
+    info_type = sys.argv[1]
+    date = sys.argv[2]
+    data_files_list = [x for x in os.listdir(sys.argv[3])]
 
-    for filePath in filesOfTheYear:
-        with open(sys.argv[2] + "/" + filePath, 'r') as fp:
-            line = fp.readline()
-            cnt = 1
-            while line:
-                # print("Line {}: {}".format(cnt, line.strip()))
-                if cnt >= 3:
-                    weatherDetail = line.split(',')
-                    if len(weatherDetail) > 20:
-                        MaxTemprature.append(0 if weatherDetail[1] == '' else int(weatherDetail[1]))
-                        LowestTemprature.append(0 if weatherDetail[3] == '' else int(weatherDetail[3]))
-                        MostHumid.append(0 if weatherDetail[7] == '' else int(weatherDetail[7]))
-                        Dates.append(weatherDetail[0])
-                        # print("{} | {} | {} | {}".format(weatherDetail[0],weatherDetail[1],weatherDetail[3],weatherDetail[7]))
+    if info_type == '-e':
 
-                line = fp.readline()
-                cnt += 1
 
-    print("\t\t\t\t*** RESULTS OF THE YEAR ***")
-    maxTempIndex = MaxTemprature.index(max(MaxTemprature))
-    print("Highest: {}C on {}".format(MaxTemprature[maxTempIndex], Dates[maxTempIndex]))
+        # Passing file names to parse engine to get list of weather
+        list_of_weather_year = weather_data_files_parser.parse_files(date, data_files_list, sys.argv[3], info_type)
 
-    lowestTempIndex = LowestTemprature.index(max(LowestTemprature))
-    print("Lowest: {}C on {}".format(LowestTemprature[lowestTempIndex], Dates[lowestTempIndex]))
+        max_temp = max([mt.max_temprature for mt in list_of_weather_year])
+        lowest_temp = max(lt.lowest_temprature for lt in list_of_weather_year)
+        most_humid = max(mh.most_humid for mh in list_of_weather_year)
 
-    mostHumidIndex = MostHumid.index(max(MostHumid))
-    print("Humit: {}% on {}".format(MostHumid[mostHumidIndex], datetime.strptime(Dates[mostHumidIndex], '%b %d %Y')))
+        system('clear')
+        print("\t\t\t\t*** RESULTS OF THE YEAR ***")
+        max_temp_date = [mt.date for mt in list_of_weather_year if mt.max_temprature is max_temp][0].split('-')
+        print("\t\t\t\tHighest: {}C on {} {}".format(max_temp, calendar.month_name[int(max_temp_date[1])], max_temp_date[2]))
+        lowest_temp_date = [ltd.date for ltd in list_of_weather_year if ltd.lowest_temprature is lowest_temp][0].split('-')
+        print("\t\t\t\tLowest: {}C on {} {}".format(lowest_temp, calendar.month_name[int(lowest_temp_date[1])], lowest_temp_date[2]))
+        most_humid_date = [mh.date for mh in list_of_weather_year if mh.most_humid is most_humid][0].split('-')
+        print("\t\t\t\tHumid: {}% on {} {}".format(most_humid, calendar.month_name[int(most_humid_date[1])], most_humid_date[2]))
+    elif info_type == '-a':
+
+        files_of_the_month = weather_data_files_parser.parse_files(date, data_files_list, sys.argv[3], info_type)
+
+        system('clear')
+        print("\t\t\t\t*** RESULTS OF THE MONTH ***")
+        print("\t\t\t\tHighest Average: {}C".format(int(statistics.mean([mt.max_temprature for mt in files_of_the_month]))))
+        print("\t\t\t\tLowest Average: {}C".format(int(statistics.mean(lt.lowest_temprature for lt in files_of_the_month))))
+        print("\t\t\t\tAverage Humidity: {}%".format(int(statistics.mean(mh.most_humid for mh in files_of_the_month))))
