@@ -1,4 +1,4 @@
-##Steps to Run:
+# Steps to Run:
 
 1 - Make sure to have python 3.5 verison installed
 2 - Clone the repository with weatherdata folder
