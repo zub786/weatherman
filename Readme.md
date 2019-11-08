@@ -1,10 +1,10 @@
 # Steps to Run:
 
-1 - Make sure to have python 3.5 verison installed
+1 - Make sure to have python 3.5 verison installed.
 
-3 - Make sure the existence of weatherman folder containing all weather files in the root of weatherman.py
+3 - Make sure the existence of weatherman folder containing all weather files in the root of weatherman.py.
 
-3 - Clone the repository with weatherdata folder
+3 - Clone the repository.
 
 4 - Run the following commands to enjoy the app:
 
