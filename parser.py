@@ -8,10 +8,12 @@ class Parse:
 
     def __init__(self, date, data_files_list, root_path, info_type):
         weather_years = []
+        # In this case, only year 1996 will be in date variable
         if info_type == '-e':
             files = [file_name for file_name in data_files_list if date in file_name]
-        elif info_type == '-a':
-            files = [file_name for file_name in data_files_list if calendar.month_name[int(date.split('/')[1])][0:3] in file_name]
+        # In this case, year and month 1996/12 will be in date variable
+        elif info_type == '-a' or info_type == '-c' or info_type == '-d':
+            files = [file_name for file_name in data_files_list if calendar.month_name[int(date.split('/')[1])][0:3] in file_name and date.split('/')[0] in file_name]
         for file_path in files:
             with open(root_path+ "/" + file_path, 'r') as fp:
                 line = fp.readline()

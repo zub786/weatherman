@@ -14,6 +14,7 @@ yearly report""", type=str)
 parser.add_argument("-a", "--a", help="""Flag to generate
 monthly report""", type=str)
 parser.add_argument("-c", "--c", help="", type=str)
+parser.add_argument("-d", "--d", help="", type=str)
 args = parser.parse_args()
 
 if args.e:
@@ -25,6 +26,9 @@ elif args.a:
 elif args.c:
     date = args.c
     info_type = '-c'
+elif args.d:
+    date = args.d
+    info_type = '-d'
 
 data_files_list = [x for x in os.listdir(args.path)]
 # Passing files to parse engine to get list of weather
