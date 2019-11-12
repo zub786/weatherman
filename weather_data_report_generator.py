@@ -18,8 +18,7 @@ def generate_report(parsed_list, info_type):
         print("\t\t\t\t*** RESULTS OF THE YEAR ***")
         max_temp_date = [mt.date for mt in parsed_list
                          if mt.max_temprature is max_temp][0].split('-')
-        print("""\t\t\t\tHighest:
-            {}C on {} {}""".format(max_temp,
+        print("""\t\t\t\tHighest: {}C on {} {}""".format(max_temp,
                                    calendar.month_name[int(max_temp_date[1])],
                                    max_temp_date[2]))
         lowest_temp_date = [ltd.date for ltd in parsed_list
@@ -30,8 +29,8 @@ def generate_report(parsed_list, info_type):
         most_humid_date = [mh.date for mh in parsed_list
         if mh.most_humid is most_humid][0].split('-')
         print("\t\t\t\tHumid: {}% on {} {}".format(most_humid,
-                                                    calendar.month_name[int(most_humid_date[1])]
-                                                    , most_humid_date[2]))
+                                            calendar.month_name[int(most_humid_date[1])],
+                                            most_humid_date[2]))
     elif info_type == '-a':
         print("\t\t\t\t*** RESULTS OF THE MONTH ***")
         print("\t\t\t\tHighest Average: {}C".format(int(statistics.mean([mt.max_temprature
